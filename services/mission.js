@@ -1,5 +1,4 @@
 const {Mission} = require('../sequelize/models')
-const mission = require('../sequelize/models/mission')
 
 exports.findAllMissions = async () => {
     return await Mission.findAll()
