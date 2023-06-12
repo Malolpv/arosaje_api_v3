@@ -2,35 +2,40 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable('gardens', {
+    await queryInterface.createTable('missions', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      user_id: {
+      name: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      start_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      },
+      end_date: {
+        type: Sequelize.DATEONLY,
+        allowNull: false
+      },
+      gardener_id: {
         type: Sequelize.INTEGER,
+        allowNull: false,
         references: {
           model: 'users',
           key: 'id'
         }
       },
-      name: {
-        type: Sequelize.STRING,
-        allowNull: false
-      },
-      latitude: {
-        type: Sequelize.DECIMAL,
-        allowNull: true
-      },
-      longitude: {
-        type: Sequelize.DECIMAL,
-        allowNull: true
-      },
-      picture: {
-        type: Sequelize.STRING,
-        allowNull: true
+      garden_id: {
+        type: Sequelize.INTEGER,
+        allowNull: false,
+        references: {
+          model: 'gardens',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,
@@ -43,6 +48,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable('Gardens');
+    await queryInterface.dropTable('missions');
   }
 };
