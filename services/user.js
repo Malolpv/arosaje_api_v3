@@ -1,5 +1,4 @@
 const {User} = require('../sequelize/models')
-const user = require('../sequelize/models/user')
 
 exports.findAllUsers = async () => {
     return await User.findAll()
