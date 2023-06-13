@@ -7,17 +7,16 @@ function generateToken(user) {
     id: user.id,
     email: user.email,
     is_botaniste: user.is_botaniste
-    // Ajoutez d'autres informations que vous souhaitez inclure dans le token
   };
 
-  return jwt.sign(payload, jwt_secret, { expiresIn: "1h" });
+  return jwt.sign(payload, jwt_secret, { expiresIn: "1h" })
 }
 
 function verifyToken(token) {
-  return jwt.verify(token, jwt_secret);
+  return jwt.verify(token, jwt_secret)
 }
 
 module.exports = {
   generateToken,
   verifyToken
-};
+}

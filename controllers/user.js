@@ -1,4 +1,4 @@
-const {findAllUsers, findUserById, deleteUserById, updateUser} = require('../services/user')
+const {findAllUsers, findUserById, deleteUserById, updateUser, isEmailTaken, createUser} = require('../services/user')
 const {findAllGardensByUserId, createGarden} = require('../services/garden')
 
 exports.getUsers = async (req,res) => {
@@ -29,16 +29,6 @@ exports.getUserGardens = async (req,res) => {
         const gardens = await findAllGardensByUserId(user_id)
         if(gardens == null) return res.status(404).send('Not found')
         res.status(200).json(gardens)
-    }catch(error){
-        res.status(500).send(error)
-    }
-}
-
-exports.postUser = async (req,res) => {
-    try {
-        const model = req.body
-        
-        res.status(500).send("NOT IMPLEMENTED")
     }catch(error){
         res.status(500).send(error)
     }

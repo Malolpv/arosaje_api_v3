@@ -19,3 +19,7 @@ exports.updateUser = async (id_user, user) => {
 exports.deleteUserById = async (id_user) => {
     return await User.destroy({where: {id: id_user}})
 }
+
+exports.emailExist = async (email) => {
+    return await User.findOne({where: {email: email}})
+}
