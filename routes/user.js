@@ -15,7 +15,7 @@ exports.usersRoutes = () => {
     router.get('/:id/gardens',getUserGardens)
 
     //create user garden
-    router.post('/:id',postUserGarden)
+    router.post('/:id/gardens',postUserGarden)
 
     //update user
     router.patch('/:id',patchUser)
