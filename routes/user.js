@@ -1,5 +1,5 @@
 const {Router} = require('express')
-const {getUser, getUsers, deleteUser, postUser, patchUser} = require('../controllers/user')
+const {getUser, getUsers, deleteUser, postUser, patchUser, getUserGardens, postUserGarden} = require('../controllers/user')
 
 
 exports.usersRoutes = () => {
@@ -11,8 +11,14 @@ exports.usersRoutes = () => {
     //get user by id
     router.get('/:id',getUser)
 
+    //get user gardens
+    router.get('/:id/gardens',getUserGardens)
+
     //create user
     router.post('/',postUser)
+
+    //create user garden
+    router.post('/:id',postUserGarden)
 
     //update user
     router.patch('/:id',patchUser)
