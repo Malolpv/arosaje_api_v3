@@ -2,7 +2,7 @@ const {Router} = require('express')
 const {register, login} = require('../controllers/auth')
 
 
-exports.usersRoutes = () => {
+exports.authRoutes = () => {
     const router = Router()
 
     // get all users 
