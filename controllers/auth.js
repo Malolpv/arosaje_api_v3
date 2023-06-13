@@ -9,15 +9,15 @@ const register = async (req, res) => {
       // Check if the email already exists
       const existingUser = await emailExist(email)
       if (existingUser) {
-        return res.status(409).json({error: "An accountalready exist for this email"})
+        return res.status(409).json({error: "An account already exist for this email"})
       }
   
       // Hash the password
       const hashedPassword = await bcrypt.hash(password, 10)
   
       // Create a new user
-      const user = createUser({pseudo: pseudo, email: email, password: hashedPassword, is_botaniste: is_botaniste})
-  
+      const user = await createUser({pseudo: pseudo, email: email, password: hashedPassword, is_botaniste: is_botaniste})
+      
       res.status(201).json(user)
     } catch (error) {
       console.error(error)
