@@ -28,19 +28,21 @@ exports.getUserGardens = async (req,res) => {
         const user_id = req.params.id
         const gardens = await findAllGardensByUserId(user_id)
         if(gardens == null) return res.status(404).send('Not found')
+
         res.status(200).json(gardens)
     }catch(error){
+        console.error(error)
         res.status(500).send(error)
     }
 }
 
 exports.postUserGarden = async (req,res) => {
     try {
-        const { userId } = req.params // Id du user propriétaire du jardin
+        const user_id  = req.params.id // Id du user propriétaire du jardin
         const { name, latitude, longitude, picture } = req.body // charge les données du jardin
         
         // Recherchez l'utilisateur dans la base de données
-        const user = await findUserById(userId)
+        const user = await findUserById(user_id)
     
         if (!user) {
           // Si l'utilisateur n'est pas trouvé, renvoie un code d'erreur 404 (Non trouvé)
@@ -48,12 +50,13 @@ exports.postUserGarden = async (req,res) => {
         }
     
         // Créée une nouvelle instance de Garden avec les données reçues
-        const garden = createGarden({user_id: userId, name, latitude, longitude, picture})
+        const garden = await createGarden({user_id: user_id, name, latitude, longitude, picture})
 
         // jardin créé code de statut 201 (Créé)
         res.status(201).json(garden)
 
     } catch (error) {
+        console.error(error)
         // En cas d'erreur, répondez avec un code d'erreur approprié (par exemple, 500 pour une erreur interne du serveur) et un message d'erreur
         res.status(500).send('Une erreur est survenue lors de la création du jardin.' )
     }
@@ -61,11 +64,11 @@ exports.postUserGarden = async (req,res) => {
 
 exports.patchUser = async (req,res) => {
     try {
-        const { userId } = req.params // Id du user a update
+        const user_id = req.params.id // Id du user a update
         const { pseudo, email, password, is_botaniste } = req.body // Données a mettre à jour
     
         // Recherche l'utilisateur dans la base de données
-        const user = await findUserById(userId)
+        const user = await findUserById(user_id)
     
         if (!user) {
           // Si l'utilisateur n'est pas trouvé, renvoie un code d'erreur 404 (Non trouvé)
@@ -79,7 +82,7 @@ exports.patchUser = async (req,res) => {
         user.is_botaniste = is_botaniste || user.is_botaniste
     
         // Enregistre les modifications dans la base de données
-        await updateUser(userId,user)
+        await updateUser(user_id,user)
 
     
         // Répondez avec l'utilisateur mis à jour

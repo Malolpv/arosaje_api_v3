@@ -19,3 +19,7 @@ exports.updateGarden = async (id_garden, garden) => {
 exports.deleteGardenById = async (id_garden) => {
     return await Garden.destroy({where: {id: id_garden}})
 }
+
+exports.findAllGardensByUserId = async (id_user) => {
+    return await Garden.findAll({where: {user_id: id_user}})
+}
