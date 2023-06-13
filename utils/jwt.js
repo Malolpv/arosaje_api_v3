@@ -1,8 +1,10 @@
-const jwt = require("jsonwebtoken");
+require('dotenv').config()
+
+const jwt = require("jsonwebtoken")
 
 const jwt_secret = process.env.JWT_SECRET
 
-function generateToken(user) {
+const generateToken = (user) => {
   const payload = {
     id: user.id,
     email: user.email,
@@ -12,7 +14,7 @@ function generateToken(user) {
   return jwt.sign(payload, jwt_secret, { expiresIn: "1h" })
 }
 
-function verifyToken(token) {
+const verifyToken = (token) => {
   return jwt.verify(token, jwt_secret)
 }
 
