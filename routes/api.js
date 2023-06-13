@@ -1,12 +1,13 @@
 const {Router} = require('express')
 const {usersRoutes} = require('../routes/user')
-
+const {authRoutes} = require('../routes/auth')
 
 
 
 const apiV1 = () => { 
     const router = Router()
 
+    router.use('/',authRoutes())
     router.use('/users',usersRoutes())
 
     return router
