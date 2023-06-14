@@ -52,12 +52,13 @@ exports.postPlantPicture = async (req,res) => {
     try {
         const id_plant = req.params.id
         const {content} = req.body
+        const user_id = req.user.id
 
         //la plante existe ?
         const plant = await findPlantById(id_plant)
         if(plant == null) return res.status(404).send('Not found')
 
-        const picture =  await createPicture({plant_id: id_plant, user_id: null, content}) 
+        const picture =  await createPicture({plant_id: id_plant, user_id: user_id, content}) 
 
         //on a cree la picture on la renvoie
         res.status(201).json(picture)
@@ -71,12 +72,13 @@ exports.postPlantAdvice = async (req,res) => {
     try {
         const id_plant = req.params.id
         const {content} = req.body
+        const user_id = req.user.id
 
         //la plante existe ?
         const plant = await findPlantById(id_plant)
         if(plant == null) return res.status(404).send('Not found')
 
-        const advice =  await createAdvice({plant_id: id_plant, user_id: null, content}) 
+        const advice =  await createAdvice({plant_id: id_plant, user_id: user_id, content}) 
 
         //on a cree l'advice on la renvoie
         res.status(201).json(advice)
