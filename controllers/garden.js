@@ -1,6 +1,6 @@
-const {findGardenById, deleteGardenById, updateGarden} = require('../services/garden')
+const {findGardenById, deleteGardenById, updateGarden, findGardenWhere} = require('../services/garden')
 const {findAllPlantsByGardenId,createPlant} = require('../services/plant')
-const { NOT_FOUND, FORBIDDEN } = require('../utils/http_status')
+const { NOT_FOUND, FORBIDDEN, OK_NO_CONTENT, INTERNAL_SERVER_ERROR, CREATED } = require('../utils/http_status')
 
 
 exports.getGarden = async (req,res) => {
@@ -61,21 +61,14 @@ exports.postGardenPlant = async (req,res) => {
     try {
         const id_garden = req.params.id
         const {name, type, sowing_date, picture} = req.body
-        const logged_user_id = req.user.id
-
-        //le jardin existe ?
-        const garden = await findGardenById(id_garden)
-        if(garden == null) return res.status(404).json({error: 'Impossible d\'ajouter une plante à un jardin inexistant'})
-
-        if(garden.user_id != logged_user_id) return res.status(FORBIDDEN).json({error: 'Seulement le propriétaire du jardin peut y ajouter une plante'})
 
         const plant =  await createPlant({garden_id: id_garden ,name, type, sowing_date, picture}) 
 
         //on a cree la plante on la renvoie
-        res.status(201).json(plant)
+        res.status(CREATED).json(plant)
     }catch(error){
         console.error(error)
-        res.status(500).json({error: 'Erreur lors de la création de la plante'})
+        res.status(INTERNAL_SERVER_ERROR).json({error: 'Erreur lors de la création de la plante'})
     }
 }
 
@@ -85,9 +78,10 @@ exports.postGardenMission = async (req,res) => {
         const id_garden = req.params.id
         const plant = req.body
         //TODO
-        res.status(500).json({error: 'NOT IMPLEMENTED'})
+        res.status(INTERNAL_SERVER_ERROR).json({error: 'NOT IMPLEMENTED'})
     }catch(error){
-        res.status(500).json(error)
+        console.error(error)
+        res.status(INTERNAL_SERVER_ERROR).json(error)
     }
 }
 
@@ -97,13 +91,8 @@ exports.patchGarden = async (req,res) => {
         const { gardenId } = req.params // Id du garden a update
         const { name, longitude, latitude, picture } = req.body // Données a mettre à jour
     
-        // Recherche le garden dans la base de données
-        const garden = await findGardenById(gardenId)
-    
-        if (!garden) {
-          // Si le garden n'est pas trouvé, renvoie un code d'erreur 404 (Non trouvé)
-          return res.status(404).json('Not found')
-        }
+        // on récupère le garden qui a été set dans le middleware checkGardenOwnership
+        const garden = req.garden
     
         // Met à jour les propriétés du garden
         garden.name = name || garden.name
@@ -116,32 +105,24 @@ exports.patchGarden = async (req,res) => {
 
     
         // Répondez avec l'utilisateur mis à jour
-        res.status(200).json(garden)
+        res.status(OK).json(garden)
     } catch (error) {
         console.error(error)
-        res.status(500).json({error: 'Une erreur est survenue lors de la mise à jour du jardin.'})
+        res.status(INTERNAL_SERVER_ERROR).json({error: 'Une erreur est survenue lors de la mise à jour du jardin.'})
     }
 }
 
 exports.deleteGarden = async (req,res) => {
     try{
         const id_garden = req.params.id
-        const logged_user_id = req.user.id
-
-        //le jardin existe ?
-        const garden = await findGardenById(id_garden)
-        if(garden == null) return res.status(NOT_FOUND).json({error: 'Suppression impossible jardin inexistant'})
-
-        // qui essaye de supprimer le jardin ?
-        if(garden.user_id != logged_user_id) return res.status(FORBIDDEN).json({error: 'Seul le propriétaire du jardin peut le supprimer'})
 
         //suppression
         await deleteGardenById(id_garden)
         
-        res.status(204)
+        res.status(OK_NO_CONTENT)
     }catch(error){
         console.error(error)
-        res.status(500).json({error: 'Erreur lors de la suppression du jardin'})
+        res.status(INTERNAL_SERVER_ERROR).json({error: 'Erreur lors de la suppression du jardin'})
     }
 }
 

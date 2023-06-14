@@ -8,6 +8,11 @@ exports.findGardenById = async (id_garden) => {
     return await Garden.findOne({where: {id: id_garden}})
 }
 
+exports.findGardenWhere = async (where_clause) => {
+    return await Garden.findOne({where: where_clause})
+}
+
+
 exports.createGarden = async (garden) => {
     return await Garden.create(garden)
 }

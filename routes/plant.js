@@ -1,7 +1,7 @@
 const {Router} = require('express')
 const {getPlant, getPlants, deletePlant, postPlant, patchPlant, getPlantPictures, getPlantAdvices, postPlantPicture, postPlantAdvice} = require('../controllers/plant')
 const authMiddleware = require('../middlewares/auth')
-
+const {checkPlantOwnership} = require('../middlewares/ownership')
 
 exports.plantsRoutes = () => {
     const router = Router()
@@ -25,10 +25,10 @@ exports.plantsRoutes = () => {
     router.post('/:id/advices', authMiddleware, postPlantAdvice)
 
     //update plant
-    router.patch('/:id', authMiddleware,patchPlant)
+    router.patch('/:id', authMiddleware, checkPlantOwnership, patchPlant)
 
     //delete plant
-    router.delete('/:id', authMiddleware,deletePlant)
+    router.delete('/:id', authMiddleware, checkPlantOwnership,deletePlant)
 
     return router
 }
