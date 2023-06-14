@@ -1,7 +1,8 @@
 module.exports = {
     //2XX
     OK: 200,
-   OK_NO_CONTENT: 204,
+    CREATED: 201,
+    OK_NO_CONTENT: 204,
 
     //4XX
     FORBIDDEN: 403,
