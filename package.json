@@ -1,7 +1,7 @@
 {
   "name": "arosaje_api_v3",
   "version": "1.0.0",
-  "description": "",
+  "description": "This package is an api running on express with sequelize for the arosaje project",
   "main": "app.js",
   "scripts": {
     "start": "nodemon app.js",
@@ -9,7 +9,7 @@
     "demo": "node app.js"
   },
   "keywords": [],
-  "author": "",
+  "author": "Malo Le Pavec",
   "license": "ISC",
   "dependencies": {
     "bcrypt": "^5.1.0",
