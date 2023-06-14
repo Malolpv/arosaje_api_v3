@@ -1,13 +1,11 @@
 const {Router} = require('express')
-const {getGarden, getGardens, deleteGarden, postGarden, patchGarden, getGardenPlants, postGardenPlant, getGardenMissions, postGardenMission} = require('../controllers/garden')
+const {getGarden, deleteGarden, postGarden, patchGarden, getGardenPlants, postGardenPlant, getGardenMissions, postGardenMission} = require('../controllers/garden')
 const authMiddleware = require('../middlewares/auth')
 
 
 exports.gardensRoutes = () => {
     const router = Router()
 
-    // get all gardens 
-    router.get('/',getGardens)
 
     //get garden by id
     router.get('/:id', authMiddleware ,getGarden)
