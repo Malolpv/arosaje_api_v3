@@ -1,5 +1,7 @@
 const {Router} = require('express')
-const {getAdvice, deleteAdvice, patchAdvice} = require('../controllers/advice')
+const {getAdvice, deleteAdvice} = require('../controllers/advice')
+const { checkAdviceOwnership } = require('../middlewares/ownership')
+const authMiddleware = require('../middlewares/auth')
 
 
 exports.advicesRoutes = () => {
@@ -8,11 +10,8 @@ exports.advicesRoutes = () => {
     //get advice by id
     router.get('/:id',getAdvice)
 
-    //update advice
-    router.patch('/:id',patchAdvice)
-
     //delete advice
-    router.delete('/:id',deleteAdvice)
+    router.delete('/:id', authMiddleware ,checkAdviceOwnership,deleteAdvice)
 
     return router
 }

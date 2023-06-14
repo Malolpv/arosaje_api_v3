@@ -119,7 +119,7 @@ exports.deleteGarden = async (req,res) => {
         //suppression
         await deleteGardenById(id_garden)
         
-        res.status(OK_NO_CONTENT)
+        res.status(OK_NO_CONTENT).json()
     }catch(error){
         console.error(error)
         res.status(INTERNAL_SERVER_ERROR).json({error: 'Erreur lors de la suppression du jardin'})

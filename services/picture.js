@@ -1,3 +1,4 @@
+const { where } = require('sequelize')
 const {Picture} = require('../sequelize/models')
 
 exports.findAllPictures = async () => {
@@ -18,4 +19,8 @@ exports.updatePicture = async (id_picture, picture) => {
 
 exports.deletePictureById = async (id_picture) => {
     return await Picture.destroy({where: {id: id_picture}})
+}
+
+exports.findPictureWhere = async (where) => {
+    return await Picture.findOne({where: where})
 }

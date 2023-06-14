@@ -1,6 +1,7 @@
 const {Router} = require('express')
-const {getPicture, deletePicture, patchPicture} = require('../controllers/picture')
+const {getPicture, deletePicture} = require('../controllers/picture')
 const authMiddleware = require('../middlewares/auth')
+const { checkPictureOwnership } = require('../middlewares/ownership')
 
 
 exports.picturesRoutes = () => {
@@ -9,11 +10,8 @@ exports.picturesRoutes = () => {
     //get picture by id
     router.get('/:id', authMiddleware, getPicture)
 
-    //update picture
-    router.patch('/:id', authMiddleware, patchPicture)
-
     //delete picture
-    router.delete('/:id', authMiddleware, deletePicture)
+    router.delete('/:id', authMiddleware, checkPictureOwnership, deletePicture)
 
     return router
 }

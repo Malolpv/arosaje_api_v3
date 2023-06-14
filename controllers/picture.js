@@ -13,16 +13,6 @@ exports.getPicture = async (req,res) => {
     
 }
 
-exports.patchPicture = async (req,res) => {
-    try {
-        const model = req.body
-        
-        res.status(500).send("NOT IMPLEMENTED")
-    }catch(error){
-        res.status(500).send(error)
-    }
-}
-
 exports.deletePicture = async (req,res) => {
     try{
         const id_picture = req.params.id

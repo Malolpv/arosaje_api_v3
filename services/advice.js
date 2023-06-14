@@ -19,3 +19,7 @@ exports.updateAdvice = async (id_advice, advice) => {
 exports.deleteAdviceById = async (id_advice) => {
     return await Advice.destroy({where: {id: id_advice}})
 }
+
+exports.findAdviceWhere = async (where) => {
+    return await Advice.findOne({where: where})
+}
