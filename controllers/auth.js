@@ -18,7 +18,10 @@ const register = async (req, res) => {
       // Create a new user
       const user = await createUser({pseudo: pseudo, email: email, password: hashedPassword, is_botaniste: is_botaniste})
       
-      res.status(201).json({message: 'Utilisateur créé'})
+      // Generate JWT token
+      const token = generateToken(user)
+  
+      res.status(200).json({ token });
     } catch (error) {
       console.error(error)
       res.status(500).json({ message: "Erreur interne du serveur" })
