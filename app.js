@@ -1,4 +1,5 @@
 const express = require('express')
+const cors = require('cors')
 require('dotenv').config()
 
 const {sequelize} = require('./sequelize/models')
@@ -28,6 +29,12 @@ const connectDb = async () => {
 
     //Json body parser dependency
     app.use(express.json())
+    
+    
+    //cors
+    app.use(cors({
+        origin: '*'
+    }));
 
     app.get('/', (req, res, next) => {
         res.status(200).send('Hello World !')
