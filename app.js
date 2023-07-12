@@ -2,13 +2,19 @@ const express = require('express')
 const cors = require('cors')
 require('dotenv').config()
 
-const {sequelize} = require('./sequelize/models')
-const {api} = require('./routes/api')
+//swagger ui and setup
+const swaggerUi = require("swagger-ui-express")
+const swaggerSpecs = require('./swagger.js')
+    
+
+const { sequelize } = require('./sequelize/models')
+const { api } = require('./routes/api')
 
 
 const app = express()
 const port = process.env.PORT || 5000
 
+//Database connection
 const connectDb = async () => {
     console.log('Checking database connection...');
 
@@ -16,12 +22,14 @@ const connectDb = async () => {
         await sequelize.sync()
         await sequelize.authenticate();
         console.log('Database connection established.');
-    } catch(e) {
+    } catch (e) {
         console.log('Database connection failed', e);
         process.exit(1);
     }
 };
 
+
+//Server Start
 (async () => {
     await connectDb();
 
@@ -29,21 +37,28 @@ const connectDb = async () => {
 
     //Json body parser dependency
     app.use(express.json())
-    
-    
+
     //cors
     app.use(cors({
         origin: '*'
     }));
 
+    //swagger setup
+    app.use(
+        "/api-docs",
+        swaggerUi.serve,
+        swaggerUi.setup(swaggerSpecs,{explorer: true})
+    )
+
     app.get('/', (req, res, next) => {
         res.status(200).send('Hello World !')
     })
-    app.use('/api',api())
-    app.get('*',(req,res) => {
-        res.status(404).send('Not Found')
+    app.use('/api', api())
+    app.get('*', (req, res) => {
+        res.redirect("/api-docs")
+        // res.status(404).send('Not Found')
     })
-    
+
     app.listen(port, () => {
         console.log(`Listening on port ${port}`)
     });
