@@ -68,7 +68,7 @@ exports.authRoutes = () => {
     //register route
     /**
     * @swagger
-    *   /reigster:
+    *   /register:
     *       post:
     *           tags:
     *               - Authorization
