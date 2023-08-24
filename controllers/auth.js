@@ -3,7 +3,6 @@ const {createUser, emailExist} = require('../services/user');
 const { generateToken } = require("../utils/jwt");
 
 const register = async (req, res) => {
-  console.log('touched')
     try {
       const { pseudo, email, password, is_botaniste } = req.body
   
