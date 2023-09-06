@@ -17,9 +17,9 @@ let sequelize;
 // }
 
 sequelize = new Sequelize(process.env.MYSQLDB_DATABASE, process.env.MYSQLDB_USER, process.env.MYSQLDB_ROOT_PASSWORD, {
-  host: 'mysql',
-  dialect: 'mysql',
-  port: '3306',
+  host: process.env.MYSQLDB_HOST,
+  dialect: process.env.MYSQLDB_DIALECT,
+  port: process.env.MYSQLDB_LOCAL_PORT,
 
   pool: {
     max: 5,

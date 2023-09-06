@@ -12,7 +12,7 @@ const { api } = require('./routes/api')
 
 
 const app = express()
-const port = process.env.PORT || 5000
+const port = process.env.NODE_LOCAL_PORT || 5000
 
 //Database connection
 const connectDb = async () => {

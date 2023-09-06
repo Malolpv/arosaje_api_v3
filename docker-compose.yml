@@ -4,8 +4,8 @@ services:
     image: mysql:latest
     env_file: ./.env
     environment:
-      MYSQL_ROOT_PASSWORD: $DB_PASSWORD
-      MYSQL_DATABASE: $DB_NAME
+      MYSQL_ROOT_PASSWORD: $MYSQLDB_ROOT_PASSWORD
+      MYSQL_DATABASE: $MYSQLDB_DATABASE
     ports:
       - $MYSQLDB_LOCAL_PORT:$MYSQLDB_DOCKER_PORT
     volumes:
@@ -20,7 +20,7 @@ services:
       - $NODE_LOCAL_PORT:$NODE_DOCKER_PORT
     
     environment:
-      - DB_HOST=mysqldb
+      - DB_HOST=$MYSQLDB_HOST
       - DB_USER=$MYSQLDB_USER
       - DB_PASSWORD=$MYSQLDB_ROOT_PASSWORD
       - DB_NAME=$MYSQLDB_DATABASE
