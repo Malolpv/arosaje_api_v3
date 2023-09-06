@@ -1,0 +1,14 @@
+JWT_SECRET=MY JWT SECRET
+NODE_ENV=development
+
+MYSQLDB_USER= database user
+MYSQLDB_ROOT_PASSWORD= root password
+MYSQLDB_DATABASE= database name
+MYSQLDB_HOST= database host #Should correspond to the db service name in the docker_compose.yml
+MYSQLDB_DIALECT=mysql
+MYSQLDB_LOCAL_PORT=3306 #the local port
+MYSQLDB_DOCKER_PORT=3306 #docker port
+
+NODE_LOCAL_PORT=5000 #local port
+NODE_DOCKER_PORT=5000 #docker port
+
