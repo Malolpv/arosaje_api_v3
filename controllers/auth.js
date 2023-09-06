@@ -8,13 +8,14 @@ require('../utils/http_status')
 const register = async (req, res) => {
   try {
     const { pseudo, email, password, is_botaniste } = req.body
-
-    if (!email || !pseudo || !password || !is_botaniste) {
-      // payload vide / invalide
+    
+    // empty / invalid payload 
+    if (!email || !pseudo || !password || typeof is_botaniste !== 'boolean') {
       return res.status(BAD_REQUEST).json('Aucun champ ne doit être vide')
     }
 
-    if(new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(email.trim())){
+    // email is invalid
+    if(!new RegExp(/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/).test(email.trim())){
       return res.status(UNAUTHORIZED).json("L'email doit être valide")
     }
 
