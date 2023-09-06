@@ -10,7 +10,7 @@ This project is a [Node.js](https://nodejs.org) REST API built with [Sequelize](
 
 ## Installation
 1. Pull this project
-2. You'll need to add a **.env** file (*please refer to [sample.env](sample.env)*)
+2. You'll need to add a **.env** file (*please refer to [sample.env](sample_env.txt)*)
 3. Open a terminal and execute :  ```:> docker compose up --build ```
 
    
